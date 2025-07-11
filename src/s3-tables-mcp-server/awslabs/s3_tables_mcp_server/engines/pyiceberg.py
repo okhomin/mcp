@@ -32,8 +32,8 @@ class PyIcebergConfig(BaseModel):
     uri: str  # e.g. 'https://s3tables.us-west-2.amazonaws.com/iceberg'
     region: str  # e.g. 'us-west-2'
     namespace: str  # e.g. 'retail_data'
-    catalog_name: str = 's3tablescatalog'  # default
-    rest_signing_name: str = 's3tables'
+    catalog_name: str = 'glue'  # default
+    rest_signing_name: str = 'glue'
     rest_sigv4_enabled: str = 'true'
 
 

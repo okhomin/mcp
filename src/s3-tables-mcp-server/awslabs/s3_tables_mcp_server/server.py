@@ -528,10 +528,10 @@ async def import_csv_to_table(
     s3_url: Annotated[str, S3_URL_FIELD],
     uri: Annotated[str, Field(..., description='REST URI for Iceberg catalog')],
     catalog_name: Annotated[
-        str, Field('s3tablescatalog', description='Catalog name')
+        str, Field('glue', description='Catalog name')
     ] = 's3tablescatalog',
     rest_signing_name: Annotated[
-        str, Field('s3tables', description='REST signing name')
+        str, Field('glue', description='REST signing name')
     ] = 's3tables',
     rest_sigv4_enabled: Annotated[str, Field('true', description='Enable SigV4 signing')] = 'true',
 ) -> dict:
@@ -566,10 +566,8 @@ async def import_csv_to_table(
     Permissions:
     You must have:
     - s3:GetObject permission for the CSV file
-    - s3tables:GetCatalog permission to access the S3Tables catalog
-    - s3tables:GetDatabase and s3tables:GetDatabases permissions to access database information
     - s3tables:GetTable and s3tables:GetTables permissions to access table information
-    - s3tables:CreateTable and s3tables:UpdateTable permissions to modify table metadata
+    - s3tables:PutTableData permission to update table metadata
     """
     log_tool_call('import_csv_to_table', locals())
     if uri is None:
