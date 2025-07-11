@@ -15,6 +15,7 @@
 """Engine for interacting with Iceberg tables using pyiceberg and daft (read-only)."""
 
 import pyarrow as pa
+import boto3
 from ..utils import pyiceberg_load_catalog
 from daft import Catalog as DaftCatalog
 from daft.session import Session
@@ -61,7 +62,7 @@ class PyIcebergEngine:
                 self.config.rest_sigv4_enabled,
             )
             self._session = Session()
-            self._session.attach(DaftCatalog.from_iceberg(self._catalog))
+            self._session.attach(DaftCatalog.from_s3tables(table_bucket_arn=self.config.warehouse))
             self._session.set_namespace(self.config.namespace)
         except Exception as e:
             raise ConnectionError(f'Failed to initialize PyIceberg connection: {str(e)}')
